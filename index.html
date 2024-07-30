@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simulador de Créditos</title>
+</head>
+<body>
+  <h1>Simulador de Créditos</h1>
+  <form id="formulario-credito">
+    <label for="montoPrestamo">Monto del Préstamo:</label>
+    <input type="number" id="montoPrestamo" required><br>
+
+    <label for="tasaInteres">Tasa de Interés (%):</label>
+    <input type="number" id="tasaInteres" required><br>
+
+    <label for="periodoPago">Período de Pago (años):</label>
+    <input type="number" id="periodoPago" required><br>
+
+    <button type="button" onclick="calcularPrestamo()">Calcular</button>
+  </form>
+
+  <p id="resultado"></p>
+
+  <script src="miarchivo.js"></script>
+</body>
+</html>
