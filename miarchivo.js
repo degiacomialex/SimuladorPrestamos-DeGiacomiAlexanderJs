@@ -1,4 +1,4 @@
-// Función para capturar entradas del usuario y calcular el préstamo
+// Función para capturar entradas del usuario y calcular el préstamos
 function iniciarSimulador() {
     // Capturar entradas del usuario usando prompt()
     let montoPrestamo = parseFloat(prompt("Ingresa el monto del préstamo:"));
@@ -11,7 +11,7 @@ function iniciarSimulador() {
         return;
     }
 
-    // Crear un objeto para representar el préstamo
+    // Crear un objeto para representar el préstamos
     let prestamo = {
         monto: montoPrestamo,
         tasa: tasaInteres,
