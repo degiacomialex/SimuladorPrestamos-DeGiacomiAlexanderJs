@@ -1,23 +1,39 @@
-function calcularPrestamo() {
-    // Obtener los valores ingresados por el usuario
-    let montoPrestamo = document.getElementById("montoPrestamo").value;
-    let tasaInteres = document.getElementById("tasaInteres").value;
-    let periodoPago = document.getElementById("periodoPago").value;
+// Función para capturar entradas del usuario y calcular el préstamo
+function iniciarSimulador() {
+    // Capturar entradas del usuario usando prompt()
+    let montoPrestamo = parseFloat(prompt("Ingresa el monto del préstamo:"));
+    let tasaInteres = parseFloat(prompt("Ingresa la tasa de interés (%):"));
+    let periodoPago = parseInt(prompt("Ingresa el período de pago (en años):"));
 
-    // Validar los inputs
-    if (montoPrestamo <= 0 || tasaInteres <= 0 || periodoPago <= 0) {
-document.getElementById("resultado").innerText = "Por favor ingresa valores válidos.";
-return;
+    // Validar entradas
+    if (isNaN(montoPrestamo) || isNaN(tasaInteres) || isNaN(periodoPago) || montoPrestamo <= 0 || tasaInteres <= 0 || periodoPago <= 0) {
+        alert("Por favor ingresa valores válidos.");
+        return;
     }
 
-    // Calcular la tasa de interés mensual
-    let tasaMensual = (tasaInteres / 100) / 12;
-    // Calcular el número total de pagos
-    let numeroPagos = periodoPago * 12;
-    
-    // Calcular el pago mensual usando la fórmula del interés compuesto
-    let pagoMensual = (montoPrestamo * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -numeroPagos));
+    // Crear un objeto para representar el préstamo
+    let prestamo = {
+        monto: montoPrestamo,
+        tasa: tasaInteres,
+        periodo: periodoPago,
+        // Método para calcular el pago mensual
+        calcularPagoMensual: function() {
+            let tasaMensual = (this.tasa / 100) / 12;
+            let numeroPagos = this.periodo * 12;
+            return (this.monto * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -numeroPagos));
+        }
+    };
 
-    // Mostrar el resultado en el elemento con id "resultado"
-    document.getElementById("resultado").innerText = `El pago mensual es: $${pagoMensual.toFixed(2)}`;
+    // Calcular el pago mensual usando el método del objeto
+    let pagoMensual = prestamo.calcularPagoMensual();
+
+    // Mostrar el resultado al usuario
+    alert(`El pago mensual es: $${pagoMensual.toFixed(2)}`);
+    console.log(`Monto del préstamo: $${prestamo.monto}`);
+    console.log(`Tasa de interés: ${prestamo.tasa}%`);
+    console.log(`Período de pago: ${prestamo.periodo} años`);
+    console.log(`Pago mensual calculado: $${pagoMensual.toFixed(2)}`);
 }
+
+// Iniciar el simulador
+iniciarSimulador();
