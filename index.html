@@ -11,15 +11,20 @@
             margin: 20px;
             background-color: #f4f4f4;
             color: #333;
+            padding: 0;
+            box-sizing: border-box;
         }
         h1 {
             color: #007bff;
             margin-bottom: 10px;
+            font-size: 24px;
+            text-align: center;
         }
         p {
             font-size: 18px;
             line-height: 1.6;
             margin-bottom: 20px;
+            text-align: center;
         }
         #resultadoSimulador {
             margin-top: 20px;
@@ -27,14 +32,33 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        @media (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 16px;
+            }
+            #resultadoSimulador {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Simulador de Préstamos</h1>
-    <p>¡Bienvenido al simulador de préstamos para clientes!  </p>
-    <p><strong>¿Qué necesitas ingresar? </strong> </p>
-    <p>por favor ingresa los datos de tu préstamo para que podamos calcular las cuotas y el monto total a pagar. Según el tipo de cliente que selecciones, se aplicarán diferentes tasas de interés</p>
+    <h1>Simulador de Préstamos para Clientes</h1>
+    <p>¡Bienvenido al simulador de préstamos! A continuación, por favor ingresa los datos de tu préstamo para que podamos calcular las cuotas y el monto total a pagar. Según el tipo de cliente que selecciones, se aplicarán diferentes tasas de interés.</p>
+    <p><strong>¿Qué necesitas ingresar?</strong></p>
     <ul>
         <li><strong>Nombre:</strong> Tu nombre completo.</li>
         <li><strong>Monto Solicitado:</strong> El monto total que deseas solicitar.</li>
@@ -44,6 +68,7 @@
     <div id="resultadoSimulador"></div>
 </body>
 </html>
+
 
 
 
