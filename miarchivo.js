@@ -6,6 +6,19 @@ class Cliente {
         this.cantidadCuotas = cantidadCuotas;
         this.tipo = tipo;
     }
+
+    // Método para validar las cuotas permitidas según el tipo de cliente
+    validarCuotas() {
+        const cuotasMaximas = {
+            vip: 24,
+            regular: 36,
+            nuevo: 48
+        };
+
+        if (this.cantidadCuotas > cuotasMaximas[this.tipo]) {
+            throw new Error(`El tipo de cliente '${this.tipo}' solo permite hasta ${cuotasMaximas[this.tipo]} cuotas.`);
+        }
+    }
 }
 
 // Clase para manejar las tasas de interés
@@ -88,16 +101,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Crear instancia de Cliente, TasaInteres y Prestamo
     let cliente = new Cliente(nombreCliente, montoSolicitado, cantidadCuotas, tipoCliente);
-    let tasaInteres = new TasaInteres().obtenerTasa(cliente.tipo);
-    let prestamo = new Prestamo(cliente, tasaInteres);
 
     try {
+        // Validar cantidad de cuotas
+        cliente.validarCuotas();
+
+        let tasaInteres = new TasaInteres().obtenerTasa(cliente.tipo);
+        let prestamo = new Prestamo(cliente, tasaInteres);
         prestamo.calcular();
+
         mostrarResultado(prestamo.obtenerMensaje());
     } catch (error) {
         mostrarResultado("Ocurrió un error: " + error.message);
     }
 });
+
 
 
 
