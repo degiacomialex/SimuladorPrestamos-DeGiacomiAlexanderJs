@@ -16,62 +16,87 @@ class Cuota {
     }
 }
 
-// Función para calcular el monto de cada cuota
-function calcularCuotas(cliente) {
-    const cuotas = [];
-    // Calcula el monto total del préstamo con interés
-    let montoTotal = cliente.montoSolicitado * (1 + cliente.tasaInteres);
-    // Calcula el monto de cada cuota
-    let montoPorCuota = montoTotal / cliente.cuotas;
-    for (let i = 1; i <= cliente.cuotas; i++) {
-        cuotas.push(new Cuota(i, montoPorCuota.toFixed(2)));
+// Clase que representa el Simulador de Préstamos
+class Simulador {
+    constructor() {
+        // Tasas de interés predefinidas para diferentes tipos de clientes
+        this.tasasInteres = {
+            "VIP": { TNA: 0.45, TEA: 0.555 },
+            "Regular": { TNA: 0.50, TEA: 0.625 },
+            "Nuevo": { TNA: 0.55, TEA: 0.695 }
+        };
     }
-    return { cuotas, montoTotal };
-}
 
-// Función para solicitar entrada del usuario y validar datos
-function solicitarDatos() {
-    let nombre = prompt("Ingrese su nombre:");
-    let montoSolicitado, tasaInteres, cuotas;
+    // Método para calcular el monto de cada cuota
+    calcularCuotas(cliente) {
+        const cuotas = [];
+        // Calcula el monto total del préstamo con interés
+        let montoTotal = cliente.montoSolicitado * (1 + cliente.tasaInteres);
+        // Calcula el monto de cada cuota
+        let montoPorCuota = montoTotal / cliente.cuotas;
+        for (let i = 1; i <= cliente.cuotas; i++) {
+            cuotas.push(new Cuota(i, montoPorCuota.toFixed(2)));
+        }
+        return { cuotas, montoTotal };
+    }
 
-    while (true) {
-        montoSolicitado = parseFloat(prompt("Ingrese el monto solicitado:"));
-        tasaInteres = parseFloat(prompt("Ingrese la tasa de interés (porcentaje):\nPor ejemplo:\n0.05 para 5%\n5 para 500%"));
-        cuotas = parseInt(prompt("Ingrese la cantidad de cuotas:"), 10);
+    // Método para solicitar datos del usuario
+    solicitarDatos() {
+        let nombre = prompt("Ingrese su nombre:");
+        let montoSolicitado, cuotas;
 
-        if (!isNaN(montoSolicitado) && montoSolicitado > 0 &&
-            !isNaN(tasaInteres) && tasaInteres >= 0 &&
-            !isNaN(cuotas) && cuotas > 0) {
-            // Convertir la tasa de interés de porcentaje a decimal
-            tasaInteres = tasaInteres / 100;
-            break;
-        } else {
-            alert("Por favor, ingrese valores válidos. Asegúrese de que el monto, la tasa de interés y las cuotas sean números positivos.");
+        while (true) {
+            montoSolicitado = parseFloat(prompt("Ingrese el monto solicitado:"));
+            cuotas = parseInt(prompt("Ingrese la cantidad de cuotas:"), 10);
+
+            if (!isNaN(montoSolicitado) && montoSolicitado > 0 &&
+                !isNaN(cuotas) && cuotas > 0) {
+
+                // Selección de tipo de cliente
+                let tipoCliente = prompt("Seleccione el tipo de cliente (VIP, Regular, Nuevo):").trim();
+                let tasas = this.tasasInteres[tipoCliente];
+
+                if (tasas !== undefined) {
+                    return { nombre, montoSolicitado, tasaInteres: tasas.TNA, cuotas, tasas };
+                } else {
+                    alert("Tipo de cliente inválido. Por favor, seleccione uno de los tipos predefinidos: VIP, Regular, o Nuevo.");
+                }
+            } else {
+                alert("Por favor, ingrese valores válidos. Asegúrese de que el monto y las cuotas sean números positivos.");
+            }
         }
     }
 
-    return { nombre, montoSolicitado, tasaInteres, cuotas };
+    // Método para ejecutar el simulador
+    ejecutar() {
+        // Capturamos los datos del cliente
+        const datosCliente = this.solicitarDatos();
+        let cliente = new Cliente(datosCliente.nombre, datosCliente.montoSolicitado, datosCliente.tasaInteres, datosCliente.cuotas);
+
+        // Calculamos las cuotas
+        let { cuotas: cuotasCalculadas, montoTotal } = this.calcularCuotas(cliente);
+
+        // Mostramos el resultado en el HTML
+        let resultadoDiv = document.getElementById('resultadoSimulador');
+        resultadoDiv.innerHTML = `<h2>Resultado del Simulador</h2>`;
+        resultadoDiv.innerHTML += `<p>Cliente: ${cliente.nombre}</p>`;
+        resultadoDiv.innerHTML += `<p>Monto Solicitado: $${cliente.montoSolicitado.toFixed(2)}</p>`;
+        resultadoDiv.innerHTML += `<p>Tasa de Interés Nominal Anual (TNA): ${(datosCliente.tasas.TNA * 100).toFixed(2)}%</p>`;
+        resultadoDiv.innerHTML += `<p>Tasa Efectiva Anual (TEA): ${(datosCliente.tasas.TEA * 100).toFixed(2)}%</p>`;
+        resultadoDiv.innerHTML += `<p>Monto Total a Pagar: $${montoTotal.toFixed(2)}</p>`;
+        resultadoDiv.innerHTML += `<p>Cuotas:</p><ul>`;
+        cuotasCalculadas.forEach(cuota => {
+            resultadoDiv.innerHTML += `<li>Cuota ${cuota.numero}: $${cuota.monto}</li>`;
+        });
+        resultadoDiv.innerHTML += `</ul>`;
+    }
 }
 
-// Capturamos los datos del cliente
-const datosCliente = solicitarDatos();
-let cliente = new Cliente(datosCliente.nombre, datosCliente.montoSolicitado, datosCliente.tasaInteres, datosCliente.cuotas);
+// Crear una instancia del simulador y ejecutarlo
+const simulador = new Simulador();
+simulador.ejecutar();
 
-// Calculamos las cuotas
-let { cuotas: cuotasCalculadas, montoTotal } = calcularCuotas(cliente);
 
-// Mostramos el resultado en el HTML
-let resultadoDiv = document.getElementById('resultadoSimulador');
-resultadoDiv.innerHTML = `<h2>Resultado del Simulador</h2>`;
-resultadoDiv.innerHTML += `<p>Cliente: ${cliente.nombre}</p>`;
-resultadoDiv.innerHTML += `<p>Monto Solicitado: $${cliente.montoSolicitado.toFixed(2)}</p>`;
-resultadoDiv.innerHTML += `<p>Tasa de Interés: ${(cliente.tasaInteres * 100).toFixed(2)}%</p>`;
-resultadoDiv.innerHTML += `<p>Monto Total a Pagar: $${montoTotal.toFixed(2)}</p>`;
-resultadoDiv.innerHTML += `<p>Cuotas:</p><ul>`;
-cuotasCalculadas.forEach(cuota => {
-    resultadoDiv.innerHTML += `<li>Cuota ${cuota.numero}: $${cuota.monto}</li>`;
-});
-resultadoDiv.innerHTML += `</ul>`;
 
 
 

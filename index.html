@@ -5,12 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Préstamos</title>
     <script src="miarchivo.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        #resultadoSimulador {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
-    <h1>Simulador de Préstamos para clientes</h1>
-    <p>por favor ingrese los datos del ciente y segun el cliente ingrese un porcentaje</p>
+    <h1>Simulador de Préstamos</h1>
+    <p>¡Bienvenido al simulador de préstamos para clientes!  </p>
+    <p><strong>¿Qué necesitas ingresar? </strong> </p>
+    <p>por favor ingresa los datos de tu préstamo para que podamos calcular las cuotas y el monto total a pagar. Según el tipo de cliente que selecciones, se aplicarán diferentes tasas de interés</p>
+    <ul>
+        <li><strong>Nombre:</strong> Tu nombre completo.</li>
+        <li><strong>Monto Solicitado:</strong> El monto total que deseas solicitar.</li>
+        <li><strong>Cantidad de Cuotas:</strong> El número de cuotas en las que deseas pagar el préstamo.</li>
+        <li><strong>Tipo de Cliente:</strong> Elige entre VIP, Regular o Nuevo para aplicar la tasa de interés correspondiente.</li>
+    </ul>
     <div id="resultadoSimulador"></div>
 </body>
 </html>
+
 
 
