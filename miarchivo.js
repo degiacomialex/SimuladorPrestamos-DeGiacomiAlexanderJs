@@ -26,9 +26,9 @@ class TasaInteres {
     constructor() {
         // Array de tasas de interés
         this.tasas = [
-            { tipo: "vip", tasa: 0.45 },
-            { tipo: "regular", tasa: 0.55 },
-            { tipo: "nuevo", tasa: 0.54 }
+            { tipo: "vip", tasa: 0.15 },
+            { tipo: "regular", tasa: 0.20 },
+            { tipo: "nuevo", tasa: 0.40 }
         ];
     }
 
