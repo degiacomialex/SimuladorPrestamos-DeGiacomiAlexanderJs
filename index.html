@@ -4,74 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Préstamos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: center; /* Centra el texto dentro del contenedor */
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        p {
-            color: #555;
-            margin: 10px 0;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0;
-            text-align: left; /* Alinea el texto de la lista a la izquierda dentro del contenedor */
-            display: inline-block; /* Alinea la lista con el texto centrado */
-        }
-
-        #resultadoSimulador {
-            margin-top: 25px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: left; /* Alinea el texto del resultado a la izquierda dentro del contenedor */
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
     <script src="miarchivo.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Simulador de Préstamos para Clientes</h1>
+    <header>
+        <h1>Simulador de Préstamos</h1>
+    </header>
+    
+    <section class="intro">
         <p>¡Bienvenido al simulador de préstamos para clientes! A continuación, por favor ingresa los datos de tu préstamo para que podamos calcular las cuotas y el monto total a pagar. Según el tipo de cliente que selecciones, se aplicarán diferentes tasas de interés.</p>
         <p><strong>¿Qué necesitas ingresar?</strong></p>
-        <ul>
-            <li>Monto del préstamo</li>
-            <li>Cantidad de cuotas</li>
-            <li>Tipo de cliente informado (VIP, Regular, Nuevo)</li>
-            <li>Tasa de interés</li>
-        </ul>
-        <div id="resultadoSimulador"></div>
-    </div>
+    </section>
+    
+    <section class="form-section">
+        <form id="formularioPrestamo">
+            <label for="monto">Monto del préstamo:</label>
+            <input type="number" id="monto" name="monto" min="0" required>
+
+            <label for="cuotas">Cantidad de cuotas:</label>
+            <input type="number" id="cuotas" name="cuotas" min="1" max="48" required>
+
+            <label for="cliente">Tipo de cliente:</label>
+            <select id="cliente" name="cliente" required>
+                <option value="vip">VIP</option>
+                <option value="regular">Regular</option>
+                <option value="nuevo">Nuevo</option>
+            </select>
+
+            <button type="submit">Calcular</button>
+        </form>
+    </section>
+    
+    <section id="resultadoSimulador" class="resultado">
+        <!-- Aquí se mostrarán los resultados -->
+    </section>
 </body>
 </html>
+
 
 
 
